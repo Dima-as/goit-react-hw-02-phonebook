@@ -34,17 +34,11 @@ class App extends Component {
     this.setState({ filter: e.target.value });
   };
 
-  onFilteredContacts = () => {
-    const { filter, contacts } = this.state;
-    return contacts.filter((contacts) =>
-      contacts.name.toLowerCase().includes(filter.toLowerCase())
-    );
-  };
-
   visibleContacts = () => {
     const { filter, contacts } = this.state;
+    const normFilter = filter.toLocaleLowerCase();
     return contacts.filter((cotact) =>
-      cotact.name.toLocaleLowerCase().includes(filter.toLocaleLowerCase())
+      cotact.name.toLocaleLowerCase().includes(normFilter)
     );
   };
   deleteContact = (contactId) => {
@@ -57,16 +51,14 @@ class App extends Component {
 
   render() {
     const { filter } = this.state;
+    const contacts = this.visibleContacts();
     return (
       <div>
         <h1>Phonebook</h1>
         <ContactForm onSubmit={this.formSubmitData} />
         <h2>Contacts</h2>
-        <Filter value={filter} onFilterInputValue={this.onFilterInputValue} />
-        <ContactList
-          contacts={this.visibleContacts()}
-          delet={this.deleteContact}
-        />
+        <Filter value={filter} onFilterInputValue={this.visibleContacts} />
+        <ContactList contacts={contacts} deleteContact={this.deleteContact} />
       </div>
     );
   }

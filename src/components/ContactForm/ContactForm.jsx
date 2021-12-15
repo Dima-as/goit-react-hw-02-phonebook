@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import s from "./ContactForm.module.scss";
+import PropTypes from "prop-types";
 import shortid from "shortid";
 
 class ContactForm extends Component {
@@ -65,4 +66,12 @@ class ContactForm extends Component {
     );
   }
 }
+ContactForm.propTypes = {
+  state: PropTypes.arrayOf(
+    PropTypes.shape({
+      name: PropTypes.string.isRequired,
+      number: PropTypes.number.isRequired,
+    })
+  ),
+};
 export default ContactForm;
